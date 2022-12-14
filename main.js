@@ -45,7 +45,6 @@ app.on('ready', () => {
 });
 
 // Respond to the resize image event
-// /dev/cu.usbserial-1420
 ipcMain.on('file:create', (e, { portPath }) => {
   // Arduino connection
   console.log(portPath);
