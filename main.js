@@ -67,17 +67,34 @@ async function createTxt({ dest, port }) {
       fs.mkdirSync(dest);
     }
     let resultData = '';
+
     fs.writeFileSync(path.join(dest, filename), resultData);
     const parser = port.pipe(new ReadlineParser({ delimiter: '\n' }));
 
+    console.log('port', port);
+    console.log('parser', parser);
+
     // Read the port data
     port.on('open', () => {
+      // testing
+      setInterval(() => {
+        port.write('<', (err, res) => {
+          if (err) return console.log('Error', err);
+          return console.log('Result', res);
+        });
+      }, 1000);
+      //
       console.log('serial port open');
     });
     parser.on('data', (data) => {
       // resultData += data;
       // Write the file to the destination folder
       fs.appendFileSync(path.join(dest, filename), data);
+
+      // await port.write('<', (err, res) => {
+      //   if (err) return console.log('Error', err);
+      //   return console.log('Result', res);
+      // });
     });
 
     // Open the folder in the file explorer

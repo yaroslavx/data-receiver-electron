@@ -4,6 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](#)
 
 > Desktop util for write data from Arduino to file
+> ![Preview](images/preview.png)
 
 ## Clone
 
