@@ -2475,6 +2475,11 @@ plist@^3.0.0, plist@^3.0.4, plist@^3.0.5:
     base64-js "^1.5.1"
     xmlbuilder "^15.1.1"
 
+plotly.js-dist-min@^2.17.1:
+  version "2.17.1"
+  resolved "https://registry.yarnpkg.com/plotly.js-dist-min/-/plotly.js-dist-min-2.17.1.tgz#ea986d71edff9956c9720dc6399142d26b097f47"
+  integrity sha512-t+emFAffVKeKCZqO76UQFgzFcbBDzNq1xL5tHXB8xuADSbBdjQxPocrp9wEULMoDi+Nl8RE2ZsyUg2G7aG+6Gw==
+
 prepend-http@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-2.0.0.tgz#e92434bfa5ea8c19f41cdfd401d741a3c819d897"

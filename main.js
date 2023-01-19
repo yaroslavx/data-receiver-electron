@@ -73,7 +73,7 @@ async function createTxt({ dest, port }) {
 
     console.log('port', port);
     console.log('parser', parser);
-
+    
     // Read the port data
     port.on('open', () => {
       // testing
