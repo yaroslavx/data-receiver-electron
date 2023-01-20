@@ -6,7 +6,7 @@ const { app, BrowserWindow, ipcMain, shell } = require('electron');
 // Libs for arduino connection
 const { SerialPort, ReadlineParser } = require('serialport');
 
-process.env.NODE_ENV = 'production';
+process.env.NODE_ENV = 'development';
 
 const isDev = process.env.NODE_ENV !== 'production';
 const isMac = process.platform === 'darwin';
@@ -73,7 +73,7 @@ async function createTxt({ dest, port }) {
 
     console.log('port', port);
     console.log('parser', parser);
-    
+
     // Read the port data
     port.on('open', () => {
       // testing
