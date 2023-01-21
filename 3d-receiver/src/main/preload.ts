@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-export type Channels = 'ipc-example' | 'file:create';
+export type Channels = 'ipc-example' | 'file:create' | 'data';
 
 const electronHandler = {
   ipcRenderer: {
@@ -16,7 +16,7 @@ const electronHandler = {
         ipcRenderer.removeListener(channel, subscription);
       };
     },
-    once(channel: Channels, func: (...args: unknown[]) => void) {
+    once(channel: Channels, func: (...args: any) => void) {
       ipcRenderer.once(channel, (_event, ...args) => func(...args));
     },
   },

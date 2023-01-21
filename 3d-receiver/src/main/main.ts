@@ -74,6 +74,9 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
+    fullscreenable: true,
+    minHeight: 728,
+    minWidth: 1024,
     width: 1024,
     height: 728,
     icon: getAssetPath('icon.png'),
@@ -97,7 +100,7 @@ const createWindow = async () => {
     }
   });
 
-  async function createTxt({ dest, port }: Record<any, any>) {
+  async function createTxt({ e, dest, port }: Record<any, any>) {
     try {
       // Get filename
       const filename = path.basename('data.txt');
@@ -105,7 +108,7 @@ const createWindow = async () => {
       if (!fs.existsSync(dest)) {
         fs.mkdirSync(dest);
       }
-      const resultData = '';
+      let resultData = '';
 
       fs.writeFileSync(path.join(dest, filename), resultData);
       const parser = port.pipe(new ReadlineParser({ delimiter: '\n' }));
@@ -115,25 +118,23 @@ const createWindow = async () => {
 
       // Read the port data
       port.on('open', () => {
-        // testing
-        setInterval(() => {
-          port.write('<', (err: any, res: any) => {
-            if (err) return console.log('Error', err);
-            return console.log('Result', res);
-          });
-        }, 1000);
-        //
+        // setInterval(() => {
+        //   port.write('<', (err: any, res: any) => {
+        //     if (err) return console.log('Error', err);
+        //     return console.log('Result', res);
+        //   });
+        // }, 1000);
         console.log('serial port open');
       });
       parser.on('data', (data: any) => {
-        // resultData += data;
+        resultData += data;
+        if (resultData.split(' ').length > 100) {
+          fs.appendFileSync(path.join(dest, filename), resultData);
+          e.reply('data', resultData);
+          resultData = '';
+        }
+        // fs.appendFileSync(path.join(dest, filename), data);
         // Write the file to the destination folder
-        fs.appendFileSync(path.join(dest, filename), data);
-
-        // await port.write('<', (err, res) => {
-        //   if (err) return console.log('Error', err);
-        //   return console.log('Result', res);
-        // });
       });
 
       // Open the folder in the file explorer
@@ -143,7 +144,7 @@ const createWindow = async () => {
     }
   }
 
-  ipcMain.on('file:create', (e, { portPath }) => {
+  ipcMain.on('file:create', async (e, { portPath }) => {
     // Arduino connection
     console.log(portPath);
     const port = new SerialPort({
@@ -153,7 +154,7 @@ const createWindow = async () => {
     const dest = path.join(os.homedir(), 'data-from-serial');
 
     // file create
-    createTxt({ dest, port });
+    createTxt({ e, dest, port });
   });
 
   mainWindow.on('closed', () => {
